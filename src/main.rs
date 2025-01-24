@@ -10,23 +10,17 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-#[allow(dead_code)]
-#[derive(Debug)]
-struct CustomError(String);
-
 fn main() -> Result<()> {
     let args = Cli::parse();
+
     let content = std::fs::read_to_string(&args.path)
         .with_context(|| format!("could not read file '{}'", &args.path.display()))?;
 
-    println!("File content:");
-    println!("{}", content);
+    for line in content.lines() {
+        if line.contains(&args.pattern) {
+            println!("{}", line);
+        }
+    }
 
     Ok(())
-
-    // for line in content.lines() {
-    //     if line.contains(&args.pattern) {
-    //         println!("{}", line);
-    //     }
-    // }
 }
