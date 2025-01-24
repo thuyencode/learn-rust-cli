@@ -11,17 +11,10 @@ struct Cli {
 
 fn main() {
     let args = Cli::parse();
-    let result = std::fs::read_to_string(&args.path);
+    let content = std::fs::read_to_string(&args.path).unwrap();
 
-    match result {
-        Ok(content) => {
-            println!("File content:");
-            println!("{}", content);
-        }
-        Err(error) => {
-            eprintln!("Oh noes: {}", error);
-        }
-    }
+    println!("File content:");
+    println!("{}", content);
 
     // for line in content.lines() {
     //     if line.contains(&args.pattern) {
