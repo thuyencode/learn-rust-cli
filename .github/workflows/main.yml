@@ -1,0 +1,15 @@
+name: Release
+
+on:
+  label:
+    types: [ created, edited ]
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and upload Rust binary to GitHub Releases
+        uses: taiki-e/upload-rust-binary-action@v1.24.0
