@@ -2,6 +2,14 @@
 name = "grrs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Rust CLI WG"]
+license = "MIT"
+description = "An alternative to `grep` but worse"
+readme = "READMD.md"
+homepage = "https://github.com/rust-cli/book/tree/master/src/tutorial"
+repository = "https://github.com/thuyencode/learn-rust-cli"
+keywords = ["cli", "search", "grep"]
+categories = ["command-line-utilities"]
 
 # Make tests work with the name used in the tutorial
 [[bin]]
