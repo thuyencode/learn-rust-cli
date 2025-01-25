@@ -1,8 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 use indicatif::ProgressBar;
-use std::io::{self, Write};
-use std::{fs, thread, time};
+use std::{fs, io, thread, time};
 
 // Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser)]
@@ -20,20 +19,33 @@ fn main() -> Result<()> {
         .with_context(|| format!("could not read file '{}'", &args.path.display()))?;
 
     let stdout = io::stdout();
-    let mut handle = io::BufWriter::new(stdout.lock());
+    let handle = io::BufWriter::new(stdout.lock());
 
     let spinner = ProgressBar::new_spinner();
     spinner.enable_steady_tick(time::Duration::from_millis(100));
 
-    thread::sleep(time::Duration::from_secs(1));
+    thread::sleep(time::Duration::from_millis(500));
 
-    for line in content.lines() {
-        if line.contains(&args.pattern) {
-            writeln!(handle, "{}", line)?;
-        }
-    }
+    find_matches(&content, &args.pattern, handle);
 
     spinner.finish();
 
     Ok(())
+}
+
+fn find_matches(content: &str, pattern: &str, mut writer: impl io::Write) {
+    for line in content.lines() {
+        if line.contains(pattern) {
+            let _ = writeln!(writer, "{}", line).with_context(|| "error while reading".to_string());
+        }
+    }
+}
+
+#[test]
+fn find_a_match() {
+    let mut result = Vec::new();
+
+    find_matches("lorem ipsum\ndolor sit amet", "lorem", &mut result);
+
+    assert_eq!(result, b"lorem ipsum\n");
 }
