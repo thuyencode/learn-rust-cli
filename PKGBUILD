@@ -11,7 +11,7 @@ license=("MIT OR Apache-2.0")
 arch=("x86_64")
 provides=("grrs")
 conflicts=("grrs")
-source=("https://github.com/thuyencode/learn-rust-cli/releases/download/v$pkgver/grrs-$pkgver-x86_64.tar.gz")
+source=("https://github.com/thuyencode/learn-rust-cli/releases/download/v$pkgver/grrs-$pkgver-x86_64-unknown-linux-gnu.tar.gz")
 sha256sums=("541a32b1e1a946ef61e8292b06c5859c9af8b5d1f7c562c783e1084bab8ac0d5")
 
 package() {
